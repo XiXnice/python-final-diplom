@@ -21,11 +21,13 @@ class CustomUserAdmin(UserAdmin):
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
     list_display = ('email', 'first_name', 'last_name', 'company', 'position', 'type')
+    list_filter = ('type', 'is_active', 'is_staff', 'is_superuser',)
 
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'user', 'url', 'state',)
+    list_filter = ('state',)
 
 
 @admin.register(Category)
@@ -35,12 +37,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('category',)
+    list_display = ('name', 'category')
 
 
 @admin.register(ProductInfo)
 class ProductInfoAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('shop', 'model')
+    list_display = ('id', 'product', 'model', 'shop', 'quantity', 'price', 'price_rrc',)
 
 
 @admin.register(Parameter)
@@ -50,22 +54,24 @@ class ParameterAdmin(admin.ModelAdmin):
 
 @admin.register(ProductParameter)
 class ProductParameterAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('parameter',)
+    list_display = ('product_info', 'parameter', 'value')
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('state',)
+    list_display = ('user', 'dt', 'state', 'contact')
 
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('order', 'product_info', 'quantity')
 
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'phone',)
 
 
 @admin.register(ConfirmEmailToken)
