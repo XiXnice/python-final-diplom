@@ -44,7 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductInfo)
 class ProductInfoAdmin(admin.ModelAdmin):
     list_filter = ('shop', 'model')
-    list_display = ('id', 'product', 'model', 'shop', 'quantity', 'price', 'price_rrc',)
+    list_display = ('product', 'model', 'shop', 'quantity', 'price', 'price_rrc',)
 
 
 @admin.register(Parameter)
