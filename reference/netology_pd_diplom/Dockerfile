@@ -1,12 +1,9 @@
-FROM python:3.9
+FROM python
 
-# set work directory
 WORKDIR /usr/src/netology_pd_diplom
 
-# install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
-RUN pip install -r requirements.dev.txt
+RUN pip install -r requirements.txt
 
-# copy project
 COPY . .

@@ -26,13 +26,16 @@ def password_reset_token_created(sender, instance, reset_password_token, **kwarg
     :return:
     """
     # send an e-mail to the user
-
-    msg = {"title": f"Password Reset Token for {reset_password_token.user}",
-           "message": reset_password_token.key,
-           "from": settings.EMAIL_HOST_USER,
-           "to": [reset_password_token.user.email]
-           }
-    send_email(**msg)
+    title = f"Password Reset Token for {reset_password_token.user}"
+    message = reset_password_token.key
+    email = [reset_password_token.user.email]
+    from_email = settings.EMAIL_HOST_USER
+    send_email(
+        title=title,
+        message=message,
+        from_email=from_email,
+        email=email
+    )
 
 
 @receiver(post_save, sender=User)
@@ -44,12 +47,16 @@ def new_user_registered_signal(sender: Type[User], instance: User, created: bool
         # send an e-mail to the user
         token, _ = ConfirmEmailToken.objects.get_or_create(user_id=instance.pk)
 
-        msg = {"title": f"Password Reset Token for {instance.email}",
-               "message": token.key,
-               "from": settings.EMAIL_HOST_USER,
-               "to": [instance.email]
-               }
-        send_email(**msg)
+        title = f"Password Reset Token for {instance.email}"
+        message = token.key
+        email = [instance.email]
+        from_email = settings.EMAIL_HOST_USER
+        send_email(
+            title=title,
+            message=message,
+            from_email=from_email,
+            email=email
+        )
 
 
 @receiver(new_order)
@@ -60,9 +67,14 @@ def new_order_signal(user_id, **kwargs):
     # send an e-mail to the user
     user = User.objects.get(id=user_id)
 
-    msg = {"title": f"Обновление статуса заказа",
-           "message": 'Заказ сформирован',
-           "from": settings.EMAIL_HOST_USER,
-           "to": [user.email]
-           }
-    send_email(**msg)
+    title = f"Обновление статуса заказа"
+    message = f'Заказ сформирован'
+    email = [user.email]
+    from_email = settings.EMAIL_HOST_USER
+    send_email(
+        title=title,
+        message=message,
+        from_email=from_email,
+        email=email
+    )
+

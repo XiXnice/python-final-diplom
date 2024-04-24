@@ -430,13 +430,9 @@ class PartnerUpdate(APIView):
             except ValidationError as e:
                 return JsonResponse({'Status': False, 'Error': str(e)})
             else:
-                stream = get(url).content
+                status = do_import(url=url, user_id=request.user.id)
 
-                data = load_yaml(stream, Loader=Loader)
-
-                do_import.delay(request.user.id, data)
-
-                return JsonResponse({'Status': True})
+                return JsonResponse({'Status': status})
 
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 

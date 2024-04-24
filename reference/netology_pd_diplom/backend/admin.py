@@ -26,6 +26,11 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
+    model = Shop
+    fieldsets = (
+        (None, {'fields': ('name', 'state')}),
+        ('Advanced options', {'classes': ('collapse',), 'fields': ('url', 'user')}),
+    )
     list_display = ('name', 'user', 'url', 'state',)
     list_filter = ('state',)
 
